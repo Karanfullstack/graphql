@@ -16,3 +16,6 @@ setting up watch-mode
 * and setting up express with graphql
 * install - npm install typescript ts-node @types/node --save-dev as dev
 * install - prisma
+* migration - npx prisma migrate dev --name name_for_migrate
+* DB -  Instace of prismaclient with some db config
+
