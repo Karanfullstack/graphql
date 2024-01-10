@@ -13,4 +13,6 @@ setting up watch-mode
 
 - @apollo/server
 
-# and setting up express with graphql
+* and setting up express with graphql
+* install - npm install typescript ts-node @types/node --save-dev as dev
+* install - prisma
