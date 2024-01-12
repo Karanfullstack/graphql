@@ -2,6 +2,7 @@ import express from "express";
 import createApolloGraphqlServer from "./graphql";
 import {expressMiddleware} from "@apollo/server/express4";
 import {prismaConnection} from "./DB/db";
+import Utils from "./utils";
 
 // Middlewares
 const app = express();
@@ -18,7 +19,20 @@ const init = async () => {
 	// starting graphql server
 	const server = await createApolloGraphqlServer();
 	// setting up graphql server
-	app.use("/graphql", expressMiddleware(server));
+	app.use(
+		"/graphql",
+		expressMiddleware(server, {
+			context: async ({req}) => {
+				try {
+					const token = req.headers["token"] as string;
+					const user = Utils.JWT_DECODE(token);
+					return {user};
+				} catch (error) {
+					return {};
+				}
+			},
+		})
+	);
 	// starting graphql server
 
 	// starting server

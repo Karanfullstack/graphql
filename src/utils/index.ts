@@ -30,6 +30,11 @@ class Utils {
 			expiresIn: "1d",
 		});
 	}
+
+	// @decode token
+	public static JWT_DECODE(token:string){
+		 return Jwt.verify(token, process.env.JWT_SECRET as string)
+	}
 }
 
 export default Utils;

@@ -21,6 +21,7 @@ class UserService {
 		}
 	}
 
+// @--getting user by email
 	public static getUserByEmail(email: string) {
 		return prisma.user.findUnique({
 			where: {
@@ -28,7 +29,7 @@ class UserService {
 			},
 		});
 	}
-
+	
 	// @@-login user
 	public static async loginUser(payload: UserLoginPayload) {
 		try {
@@ -48,6 +49,13 @@ class UserService {
 		} catch (error) {
 			throw error;
 		}
+	}
+
+	// --@get current user;
+	public static getCurrentUser(id: string) {
+		return prisma.user.findUnique({
+			where: {id},
+		});
 	}
 }
 

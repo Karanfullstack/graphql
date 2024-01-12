@@ -1,8 +1,30 @@
 import {UserLoginPayload} from "./../../services/user.service";
 import UserService, {UserCreatePayload} from "../../services/user.service";
-import Utils from "../../utils";
 
-const queries = {};
+const queries = {
+	// --@login_user
+	loginUser: async (_: any, payload: UserLoginPayload): Promise<string> => {
+		try {
+			const response = await UserService.loginUser(payload);
+			return response;
+		} catch (error: any) {
+			console.log(error.messsage);
+			throw new Error("Error While Login User...");
+		}
+	},
+
+	// @--current user
+	currentUser: async (_: any, args: any, context: any) => {
+		if (context && context.user) {
+			const {id} = context.user;
+			const user = await UserService.getCurrentUser(id);
+			return user;
+		}
+		throw new Error("No Context Found!");
+	},
+};
+
+// =============== MUTAITON ===============//
 
 // --@mutations-users
 const mutations = {
@@ -16,17 +38,6 @@ const mutations = {
 		} catch (error: any) {
 			console.log(error);
 			throw new Error(`Some error while creating user ${error.messages}`);
-		}
-	},
-
-	// --@login_user
-	loginUser: async (_: any, payload: UserLoginPayload): Promise<string> => {
-		try {
-			const response = await UserService.loginUser(payload);
-			return response;
-		} catch (error: any) {
-			console.log(error.messsage);
-			throw new Error("Error While Login User...");
 		}
 	},
 };
